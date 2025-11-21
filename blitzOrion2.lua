@@ -1,4 +1,4 @@
-warn("fukck")
+warn("fuwhwjwjwjwjkck")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
@@ -1008,58 +1008,24 @@ local WindowStuff = AddThemeObject(
 
 local TweenService = game:GetService("TweenService")
 
-AddConnection(TabFrame.MouseButton1Click, function()
-    -- 1. すべてのタブを非アクティブ状態に
-    for _, Tab in next, TabHolder:GetChildren() do
-        if Tab:IsA("TextButton") then
-            Tab.Title.Font = Enum.Font.GothamSemibold
-            TweenService:Create(Tab.Ico, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {ImageTransparency = 0.4}):Play()
-            TweenService:Create(Tab.Title, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {TextTransparency = 0.4}):Play()
-        end    
-    end
-
-    -- 2. 全ての ItemContainer を非表示
-    for _, ItemContainer in next, MainWindow:GetChildren() do
-        if ItemContainer.Name == "ItemContainer" then
-            ItemContainer.Visible = false
-        end    
-    end  
-
-    -- 3. 選択タブをアクティブ状態に
-    TweenService:Create(TabFrame.Ico, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {ImageTransparency = 0}):Play()
-    TweenService:Create(TabFrame.Title, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {TextTransparency = 0}):Play()
-    TabFrame.Title.Font = Enum.Font.GothamBlack
-
-    Container.Visible = true
-
-    -- 4. ItemContainer をフェード＆バウンド表示
-    for _, ItemContainer in next, MainWindow:GetChildren() do
-        if ItemContainer.Name == "ItemContainer" then
-            ItemContainer.Visible = true
-
-            -- フェードイン用
-            if ItemContainer:FindFirstChild("UICorner") then
-                ItemContainer.UIStroke.Transparency = 1
-            end
-            ItemContainer.BackgroundTransparency = 1
-
-            local fadeTween = TweenService:Create(ItemContainer, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0})
-            fadeTween:Play()
-
-            -- バウンド用サイズアニメーション
-            local originalSize = ItemContainer.Size
-            local bounceTween = TweenService:Create(ItemContainer, TweenInfo.new(0.25, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out), {Size = originalSize + UDim2.new(0, 10, 0, 10)})
-            bounceTween:Play()
-
-            bounceTween.Completed:Connect(function()
-                -- 元のサイズに戻す
-                local returnTween = TweenService:Create(ItemContainer, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Size = originalSize})
-                returnTween:Play()
-            end)
-        end    
-    end
-end)
-
+		AddConnection(TabFrame.MouseButton1Click, function()
+			for _, Tab in next, TabHolder:GetChildren() do
+				if Tab:IsA("TextButton") then
+					Tab.Title.Font = Enum.Font.GothamSemibold
+					TweenService:Create(Tab.Ico, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {ImageTransparency = 0.4}):Play()
+					TweenService:Create(Tab.Title, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {TextTransparency = 0.4}):Play()
+				end    
+			end
+			for _, ItemContainer in next, MainWindow:GetChildren() do
+				if ItemContainer.Name == "ItemContainer" then
+					ItemContainer.Visible = false
+				end    
+			end  
+			TweenService:Create(TabFrame.Ico, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {ImageTransparency = 0}):Play()
+			TweenService:Create(TabFrame.Title, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {TextTransparency = 0}):Play()
+			TabFrame.Title.Font = Enum.Font.GothamBlack
+			Container.Visible = true   
+		end)
 		
 
 		local function GetElements(ItemParent)
