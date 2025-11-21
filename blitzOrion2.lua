@@ -1,3 +1,4 @@
+warn("fukck")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
@@ -2781,27 +2782,6 @@ function OrionLib:Destroy()
 	Orion:Destroy()
 end
 
-local Window=OrionLib:MakeWindow({Name="Testhub",HidePremium=false,IntroEnabled=true,IntroText='Test...',IntroIcon="rbxassetid://17735487445",SaveConfig=true,ConfigFolder="",KeyBind="M",FreeMouse=true})
-local Main_Tab = Window:MakeTab({
-	Name = "Combat",
-	Icon = "rbxassetid://7485051715",
-	PremiumOnly = false
-})
-
-Main_Tab:AddToggle({
-	Name = "This is a toggle!",
-	Default = false,
-	Callback = function(Value)
-		print(Value)
-	end    
-})
-local playerPara = Main_Tab:AddPlayerParagraph(7059643752, "説明文")
-local para = Main_Tab:AddParagraph("タイトル", "内容テキスト")
-local Mainaaa_Tab = Window:MakeTab({
-	Name = "Comaabat",
-	Icon = "rbxassetid://7485051715",
-	PremiumOnly = false
-})
 --[[
 
 local Window = OrionLib:MakeWindow({Name = "aaa", HidePremium = true, SaveConfig = false, ConfigFolder = "hentai", IntroEnabled = false, KeyToOpenWindow = "M", FreeMouse = true})
