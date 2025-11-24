@@ -1,3 +1,4 @@
+print("Earwarawaraarawaearqeaeqtwarae")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
@@ -857,20 +858,23 @@ end
 	})
 
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 
--- ユーザー名に応じてラベルを決定
-local username = "HfSapSatu"
+-- 実際のプレイヤー名を取得
+local username = LocalPlayer.Name
 local labelText = ""
 
+-- ユーザー名に応じてラベルを決定
 if username == "HfSapSatu" then
-    labelText = "Owner"
+    labelText = "Owner"  -- オーナー用ラベル
 elseif username == "akipironya" then
-    labelText = "Admin"
+    labelText = "Admin"  -- 管理者用ラベル
 else
-    labelText = "Member"
+    labelText = "Member" -- その他プレイヤー
 end
+
+-- 確認用出力（必要なら）
+print("Username:", username, "Label:", labelText)
 
 
 -- 下部フレームの子要素
