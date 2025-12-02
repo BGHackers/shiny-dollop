@@ -36,7 +36,6 @@ function OrionLib:AddTheme(themeName, themeData)
     self.Themes[themeName] = themeData
 end
 
--- テーマ切替関数
 function OrionLib:SetTheme(themeName)
     local colors = self.Themes[themeName]
     if not colors then
@@ -46,21 +45,22 @@ function OrionLib:SetTheme(themeName)
 
     self.SelectedTheme = themeName
 
-    -- 色タイプごとのプロパティ対応表
     local propertyMap = {
         Main = "BackgroundColor3",
         Second = "BackgroundColor3",
-        Stroke = "StrokeColor3",
+        Stroke = "Color",
         Divider = "BackgroundColor3",
         Text = "TextColor3",
         TextDark = "TextColor3"
     }
 
     for _, obj in pairs(self.ThemeObjects) do
-        if obj.Type and obj.Instance then
+        if obj.Instance and obj.Type then
             local prop = propertyMap[obj.Type]
-            if prop and obj.Instance[prop] ~= nil and colors[obj.Type] then
-                obj.Instance[prop] = colors[obj.Type]
+            if prop and colors[obj.Type] then
+                pcall(function()
+                    obj.Instance[prop] = colors[obj.Type]
+                end)
             end
         end
     end
