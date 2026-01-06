@@ -1,0 +1,84 @@
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/jadpy/suki/refs/heads/main/orion"))()
+local GetService = game.GetService
+local service = setmetatable({
+    Players = GetService(game, "Players"),
+    Workspace = GetService(game, "Workspace"),
+    ReplicatedStorage = GetService(game, "ReplicatedStorage"),
+    RunService = GetService(game, "RunService"),
+    UserInputService = GetService(game, "UserInputService"),
+    Debris = GetService(game, "Debris"),
+    TweenService = GetService(game, "TweenService"),
+    Lighting = GetService(game, "Lighting"),
+    HttpService = GetService(game, "HttpService"),
+    StarterGui = GetService(game, "StarterGui"),
+    VirtualUser = GetService(game, "VirtualUser"),
+    VirtualInputManager = GetService(game, "VirtualInputManager"),
+    Teams = GetService(game, "Teams"),
+    TextService = GetService(game, "TextService"),
+    SoundService = GetService(game, "SoundService"),
+    PathfindingService = GetService(game, "PathfindingService"),
+    MarketplaceService = GetService(game, "MarketplaceService"),
+    GuiService = GetService(game, "GuiService"),
+    CollectionService = GetService(game, "CollectionService"),
+    ContextActionService = GetService(game, "ContextActionService"),
+}, {
+    __index = function(self, k)
+        local s = GetService(game, k)
+        self[k] = s
+        return s
+    end,
+})
+
+local Window = OrionLib:MakeWindow({Name = "Axis hub Beta版", HidePremium = false, SaveConfig = true, ConfigFolder = "AxisHubBeta.Config", IntroEnabled = true, IntroText = "Loading..."})
+
+local CombatTab = Window:MakeTab({Name = "Fling", Icon = "rbxassetid://0", PremiumOnly = false})
+
+    local strengthConnection
+    local ThrowPower = 300
+
+    CombatTab:AddSection({Name = "強さ"})
+
+    CombatTab:AddToggle({
+        Name = "強力",
+        Default = false,
+        Callback = function(enabled)
+            if not enabled then
+                if strengthConnection then
+                    strengthConnection:Disconnect()
+                    strengthConnection = nil
+                end
+                return
+            end
+            
+            strengthConnection = workspace.ChildAdded:Connect(function(model)
+                if model.Name ~= "GrabParts" then return end
+                
+                local grabPart = model:FindFirstChild("GrabPart")
+                local weld = grabPart and grabPart:FindFirstChild("WeldConstraint")
+                local partToImpulse = weld and weld.Part1
+                
+                if not partToImpulse then return end
+                
+                local velocityObj = Instance.new("BodyVelocity")
+                velocityObj.Parent = partToImpulse
+                velocityObj.MaxForce = Vector3.zero
+                
+                model:GetPropertyChangedSignal("Parent"):Connect(function()
+                    if model.Parent == nil then
+                        local lastInput = UserInputService:GetLastInputType()
+                        if lastInput == Enum.UserInputType.MouseButton2 or lastInput == Enum.UserInputType.Touch then
+                            velocityObj.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                            velocityObj.Velocity = workspace.CurrentCamera.CFrame.LookVector * ThrowPower
+                            Debris:AddItem(velocityObj, 1)
+                        else
+                            velocityObj:Destroy()
+                        end
+                    end
+                end)
+            end)
+        end
+    })
+
+GrabTab:AddSlider({Name="強力強さ", Min=300, Max=20000, Default=300, Increment=1,Callback=function(value) ThrowPower=value end})
+
+
